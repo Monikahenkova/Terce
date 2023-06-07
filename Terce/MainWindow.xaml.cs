@@ -56,7 +56,7 @@ namespace Terce
             Ellipse target = new Ellipse();
             target.Width = size;
             target.Height = size;
-            target.Fill = Brushes.Red;
+            target.Fill = Brushes.Pink;
             target.Stroke = Brushes.Black;
             target.StrokeThickness = 1;
             target.Margin = new Thickness(x, y, 0, 0);
