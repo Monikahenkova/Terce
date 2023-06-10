@@ -22,19 +22,39 @@ namespace Terce
         private Random random;
         private DispatcherTimer timer;
         private List<Ellipse> targets;
+        private int score;
+
+        private DispatcherTimer timeoutTimer;
+        private bool targetClicked;
 
         public MainWindow()
         {
             InitializeComponent();
 
+            // Vytvoření objektu ImageBrush a načtení obrázku
+            ImageBrush imageBrush = new ImageBrush();
+            imageBrush.ImageSource = new BitmapImage(new Uri("img/srdce.jpg", UriKind.Relative));
+
+            // Nastavení objektu ImageBrush jako pozadí Canvasu
+            Canvas.Background = imageBrush;
+
             random = new Random();
             targets = new List<Ellipse>();
+            score = 0;
 
-            // Spuštění generování terčů každých 1.5 sekundy
+            // Spuštění generování terčů každé 0,5 sekundy
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1.5);
+            timer.Interval = TimeSpan.FromSeconds(0.5);
             timer.Tick += Timer_Tick;
             timer.Start();
+
+            // Nastavení výchozího skóre na UI
+            ScoreTextBlock.Text = $"Score: {score}";
+
+            // Inicializace časovače pro sledování timeoutu
+            timeoutTimer = new DispatcherTimer();
+            timeoutTimer.Interval = TimeSpan.FromSeconds(1);
+            timeoutTimer.Tick += TimeoutTimer_Tick;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -43,6 +63,10 @@ namespace Terce
             Ellipse target = GenerateTarget();
             targets.Add(target);
             Canvas.Children.Add(target);
+
+            // Spuštění časovače pro timeout
+            timeoutTimer.Start();
+            targetClicked = false;
         }
 
         private Ellipse GenerateTarget()
@@ -57,9 +81,13 @@ namespace Terce
             target.Width = size;
             target.Height = size;
             target.Fill = Brushes.Pink;
-            target.Stroke = Brushes.Black;
-            target.StrokeThickness = 1;
             target.Margin = new Thickness(x, y, 0, 0);
+
+            // Nastavení obrázku srdce jako pozadí terče
+            ImageBrush imageBrush = new ImageBrush();
+            imageBrush.ImageSource = new BitmapImage(new Uri("img/srdicko.png", UriKind.Relative)); 
+            target.Fill = imageBrush;
+
 
             // Přidání obsluhy kliknutí na terč
             target.MouseLeftButtonUp += Target_MouseLeftButtonUp;
@@ -69,21 +97,52 @@ namespace Terce
 
         private void Target_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            // Zasáhnutí terče
+            // Zasáhnutí terče - zvýšení skóre
+            score++;
+            UpdateScoreUI();
+
             Ellipse target = (Ellipse)sender;
             targets.Remove(target);
             Canvas.Children.Remove(target);
+
+            // Zastavení časovače pro timeout
+            timeoutTimer.Stop();
+            targetClicked = true;
+        }
+
+        private void TimeoutTimer_Tick(object sender, EventArgs e)
+        {
+            // Timeout - terč nebyl zasažen včas
+            if (!targetClicked && targets.Count > 0)
+            {
+                Ellipse target = targets[0];
+                targets.Remove(target);
+                Canvas.Children.Remove(target);
+
+                score--;
+                UpdateScoreUI();
+            }
+
+            // Spuštění dalšího časovače pro generování terčů
+            timer.Start();
         }
 
         private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            // Zasáhnutí terče při kliknutí na plátno (pokud je terč na té pozici)
+            // Zasáhnutí terče při kliknutí na plátno (pokud je terč na té pozici) - snížení skóre
             Point mousePosition = e.GetPosition(Canvas);
             Ellipse target = GetTargetAtPosition(mousePosition);
             if (target != null)
             {
+                score--;
+                UpdateScoreUI();
+
                 targets.Remove(target);
                 Canvas.Children.Remove(target);
+
+                // Zastavení časovače pro timeout
+                timeoutTimer.Stop();
+                targetClicked = true;
             }
         }
 
@@ -100,5 +159,12 @@ namespace Terce
             }
             return null;
         }
+
+        private void UpdateScoreUI()
+        {
+            // Aktualizace skóre na UI
+            ScoreTextBlock.Text = $"Score: {score}";
+        }
     }
 }
+

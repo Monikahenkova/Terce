@@ -7,4 +7,23 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="img\srdce.jpg" />
+    <None Remove="img\srdicko.png" />
+    <None Remove="srdce.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="img\srdce.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\srdicko.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="srdce.jpg" />
+  </ItemGroup>
+
 </Project>
