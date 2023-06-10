@@ -85,7 +85,7 @@ namespace Terce
 
             // Nastavení obrázku srdce jako pozadí terče
             ImageBrush imageBrush = new ImageBrush();
-            imageBrush.ImageSource = new BitmapImage(new Uri("img/srdicko.png", UriKind.Relative)); 
+            imageBrush.ImageSource = new BitmapImage(new Uri("img/srdicko.gif", UriKind.Relative)); 
             target.Fill = imageBrush;
 
 
@@ -162,8 +162,12 @@ namespace Terce
 
         private void UpdateScoreUI()
         {
-            // Aktualizace skóre na UI
+
             ScoreTextBlock.Text = $"Score: {score}";
+            ScoreTextBlock.Foreground = Brushes.DeepPink;
+            ScoreTextBlock.FontWeight = FontWeights.Medium;
+     
+
         }
     }
 }

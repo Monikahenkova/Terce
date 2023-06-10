@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <None Remove="img\srdce.jpg" />
-    <None Remove="img\srdicko.png" />
+    <None Remove="img\srdicko.gif" />
     <None Remove="srdce.jpg" />
   </ItemGroup>
 
@@ -17,7 +17,7 @@
     <Content Include="img\srdce.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\srdicko.png">
+    <Content Include="img\srdicko.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
