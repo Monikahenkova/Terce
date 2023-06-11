@@ -27,6 +27,9 @@ namespace Terce
         private DispatcherTimer timeoutTimer;
         private bool targetClicked;
 
+        private System.Media.SoundPlayer shootSoundPlayer;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -53,8 +56,12 @@ namespace Terce
 
             // Inicializace časovače pro sledování timeoutu
             timeoutTimer = new DispatcherTimer();
-            timeoutTimer.Interval = TimeSpan.FromSeconds(1);
+            timeoutTimer.Interval = TimeSpan.FromSeconds(1.5);
             timeoutTimer.Tick += TimeoutTimer_Tick;
+
+            shootSoundPlayer = new System.Media.SoundPlayer();
+            shootSoundPlayer.SoundLocation = "sounds/sparkle.wav"; 
+            
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -89,7 +96,6 @@ namespace Terce
             target.Fill = imageBrush;
 
 
-            // Přidání obsluhy kliknutí na terč
             target.MouseLeftButtonUp += Target_MouseLeftButtonUp;
 
             return target;
@@ -108,6 +114,10 @@ namespace Terce
             // Zastavení časovače pro timeout
             timeoutTimer.Stop();
             targetClicked = true;
+
+            shootSoundPlayer.Play();
+
+
         }
 
         private void TimeoutTimer_Tick(object sender, EventArgs e)
@@ -143,6 +153,8 @@ namespace Terce
                 // Zastavení časovače pro timeout
                 timeoutTimer.Stop();
                 targetClicked = true;
+
+               
             }
         }
 
@@ -166,9 +178,10 @@ namespace Terce
             ScoreTextBlock.Text = $"Score: {score}";
             ScoreTextBlock.Foreground = Brushes.DeepPink;
             ScoreTextBlock.FontWeight = FontWeights.Medium;
-     
 
         }
+
+
     }
 }
 

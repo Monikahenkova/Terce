@@ -6,6 +6,8 @@
         <Canvas x:Name="Canvas" Background="PaleVioletRed" MouseLeftButtonUp="Canvas_MouseLeftButtonUp"/>
  
         <TextBlock x:Name="ScoreTextBlock" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
+        
+       
     </Grid>
 
 
