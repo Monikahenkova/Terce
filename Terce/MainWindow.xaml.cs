@@ -50,9 +50,7 @@ namespace Terce
             timer.Interval = TimeSpan.FromSeconds(0.5);
             timer.Tick += Timer_Tick;
             timer.Start();
-
-            // Nastavení výchozího skóre na UI
-            ScoreTextBlock.Text = $"Score: {score}";
+ vb b
 
             // Inicializace časovače pro sledování timeoutu
             timeoutTimer = new DispatcherTimer();
