@@ -175,7 +175,8 @@ namespace Terce
 
             ScoreTextBlock.Text = $"Score: {score}";
             ScoreTextBlock.Foreground = Brushes.DeepPink;
-            ScoreTextBlock.FontWeight = FontWeights.Medium;
+            ScoreTextBlock.FontWeight = FontWeights.Heavy;
+            ScoreTextBlock.FontSize = 20;
 
         }
 
