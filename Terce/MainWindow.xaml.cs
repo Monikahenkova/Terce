@@ -50,7 +50,7 @@ namespace Terce
             timer.Interval = TimeSpan.FromSeconds(0.5);
             timer.Tick += Timer_Tick;
             timer.Start();
- vb b
+
 
             // Inicializace časovače pro sledování timeoutu
             timeoutTimer = new DispatcherTimer();
